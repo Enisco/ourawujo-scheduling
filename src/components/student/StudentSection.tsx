@@ -39,8 +39,8 @@ export function StudentSection() {
     try {
       const data = await fetchSlots(TEACHER_ID, dateStr, timezone);
       setSlots(data);
-    } catch {
-      toast('Failed to fetch available slots', 'error');
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'Failed to fetch available slots', 'error');
       setSlots([]);
     } finally { setLoading(false); }
   }, [timezone]);
@@ -57,7 +57,7 @@ export function StudentSection() {
 
   async function confirmBooking(name: string, email: string) {
     try {
-      const { status } = await createBooking({
+      const { status, message } = await createBooking({
         teacherId: TEACHER_ID,
         slotStart: selectedSlot!.start,
         slotEnd: selectedSlot!.end,
@@ -65,13 +65,17 @@ export function StudentSection() {
         levelId: '', // TODO: pass actual levelId from course selection
       });
       if (status === 409) {
-        toast('That slot was just taken. Please pick another.', 'error');
+        toast(message || 'This time slot is no longer available. Please select a different time.', 'error');
         await selectDate(selectedDate!);
         return;
       }
+      if (status >= 400) {
+        toast(message || 'Failed to book slot. Please try again.', 'error');
+        return;
+      }
       toast('Booking confirmed! Check your email for the Google Meet link.', 'success');
-    } catch {
-      toast('Failed to book slot. Please try again.', 'error');
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'Failed to book slot. Please try again.', 'error');
       return;
     }
     setBookedEmail(email);

@@ -50,12 +50,12 @@ The app connects to `http://localhost:4000` (your NestJS backend). All API calls
 
 ## API Endpoints Used
 
-| Method | Path | Description |
-|--------|------|-------------|
-| POST | `/api/availability` | Save teacher weekly schedule |
-| GET | `/api/availability/:teacherId/slots?date=&timezone=` | Fetch free slots |
-| POST | `/api/availability/bookings` | Book a slot |
-| POST | `/api/availability/out-of-office` | Add OOO period |
+| Method | Path                                                 | Description                  |
+| ------ | ---------------------------------------------------- | ---------------------------- |
+| POST   | `/api/availability`                                  | Save teacher weekly schedule |
+| GET    | `/api/availability/:teacherId/slots?date=&timezone=` | Fetch free slots             |
+| POST   | `/api/availability/bookings`                         | Book a slot                  |
+| POST   | `/api/availability/out-of-office`                    | Add OOO period               |
 
 ## Mobile Responsiveness
 
@@ -68,5 +68,5 @@ The app connects to `http://localhost:4000` (your NestJS backend). All API calls
 Set `BASE_URL` in `src/types/index.ts` to point to your backend:
 
 ```ts
-export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = "http://localhost:4000";
 ```

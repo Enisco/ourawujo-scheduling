@@ -8,7 +8,7 @@ import {
 } from "@/types";
 
 const TEACHER_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMjI1ZWNlMC04ZWU4LTQ4OTAtYTQ0Zi01ODYxOGVhYTU5M2UiLCJ0eXBlIjoiYWNjZXNzIiwic2lkIjoiMTQ4ZDliNDctZGIwMi00OTlkLWFkYzktZTk2ODFlNTVhNjZhIiwiaWF0IjoxNzczNTU4NzcwLCJleHAiOjE3NzM1NjIzNzB9.Q_N972Hi5hAWN6BmJxkZx9os8Af5ouquZg-PjNl7tqk";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMjI1ZWNlMC04ZWU4LTQ4OTAtYTQ0Zi01ODYxOGVhYTU5M2UiLCJ0eXBlIjoiYWNjZXNzIiwic2lkIjoiNTMxYWFiMjktZWYwOC00NDQ1LTg0NWEtOGMyYjM4NDUxNTBjIiwiaWF0IjoxNzczNTczMDU4LCJleHAiOjE3NzM1NzY2NTh9.Ax8MhU4VzKSFfmGxdU-34sk9HOd8dQsl3Ktl7f84-HU";
 
 // TODO: Replace with real student token
 const STUDENT_TOKEN = "PLACEHOLDER_STUDENT_TOKEN";
@@ -25,6 +25,15 @@ function studentHeaders(withBody = true): HeadersInit {
   return headers;
 }
 
+async function parseError(res: Response, fallback: string): Promise<string> {
+  try {
+    const json = await res.json();
+    return json?.error?.message || json?.message || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export function pad(n: number) {
   return String(n).padStart(2, "0");
 }
@@ -39,7 +48,8 @@ export async function saveAvailability(
     headers: teacherHeaders(),
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error("Failed to save availability");
+  if (!res.ok)
+    throw new Error(await parseError(res, "Failed to save availability"));
 }
 
 export async function patchAvailability(
@@ -50,7 +60,8 @@ export async function patchAvailability(
     headers: teacherHeaders(),
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error("Failed to update availability");
+  if (!res.ok)
+    throw new Error(await parseError(res, "Failed to update availability"));
 }
 
 export async function getAvailability(): Promise<GetAvailabilityResponse> {
@@ -58,19 +69,23 @@ export async function getAvailability(): Promise<GetAvailabilityResponse> {
     headers: teacherHeaders(false),
     cache: "no-store",
   });
-  if (!res.ok) throw new Error("Failed to fetch availability");
+  if (!res.ok)
+    throw new Error(await parseError(res, "Failed to fetch availability"));
   const json = await res.json();
   return json.data;
 }
 
 // ─── Student: Browse Teachers ────────────────────────────────────────
 
-export async function fetchTeachersForLevel(levelId: string): Promise<Teacher[]> {
+export async function fetchTeachersForLevel(
+  levelId: string,
+): Promise<Teacher[]> {
   const res = await fetch(`${BASE_URL}/api/v1/levels/${levelId}/teachers`, {
     headers: studentHeaders(false),
     cache: "no-store",
   });
-  if (!res.ok) throw new Error("Failed to fetch teachers");
+  if (!res.ok)
+    throw new Error(await parseError(res, "Failed to fetch teachers"));
   const json = await res.json();
   return json.data;
 }
@@ -89,20 +104,22 @@ export async function fetchSlots(
       cache: "no-store",
     },
   );
-  if (!res.ok) throw new Error("Failed to fetch slots");
+  if (!res.ok) throw new Error(await parseError(res, "Failed to fetch slots"));
   const json = await res.json();
   return json.data?.slots || [];
 }
 
 export async function createBooking(
   payload: BookSlotPayload,
-): Promise<{ status: number }> {
+): Promise<{ status: number; message?: string }> {
   const res = await fetch(`${BASE_URL}/api/v1/enrollments/ba-mi-soro/book`, {
     method: "POST",
     headers: studentHeaders(),
     body: JSON.stringify(payload),
   });
-  return { status: res.status };
+  if (res.ok) return { status: res.status };
+  const message = await parseError(res, "Failed to book slot");
+  return { status: res.status, message };
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────
