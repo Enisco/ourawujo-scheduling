@@ -1,0 +1,43 @@
+export const TIMEZONES: { label: string; value: string }[] = [
+  // UTC-12 to UTC-1
+  { label: "Etc/GMT+12 - UTC-12", value: "Etc/GMT+12" },
+  { label: "Pacific/Niue - UTC-11", value: "Pacific/Niue" },
+  { label: "Pacific/Honolulu - UTC-10", value: "Pacific/Honolulu" },
+  { label: "Pacific/Marquesas - UTC-9:30", value: "Pacific/Marquesas" },
+  { label: "America/Anchorage - UTC-9", value: "America/Anchorage" },
+  { label: "America/Los_Angeles - UTC-8", value: "America/Los_Angeles" },
+  { label: "America/Denver - UTC-7", value: "America/Denver" },
+  { label: "America/Chicago - UTC-6", value: "America/Chicago" },
+  { label: "America/New_York - UTC-5", value: "America/New_York" },
+  { label: "America/Halifax - UTC-4", value: "America/Halifax" },
+  { label: "America/St_Johns - UTC-3:30", value: "America/St_Johns" },
+  { label: "America/Argentina/Buenos_Aires - UTC-3", value: "America/Argentina/Buenos_Aires" },
+  { label: "Atlantic/South_Georgia - UTC-2", value: "Atlantic/South_Georgia" },
+  { label: "Atlantic/Azores - UTC-1", value: "Atlantic/Azores" },
+
+  // UTC
+  { label: "Europe/London - UTC+0", value: "Europe/London" },
+
+  // UTC+1 to UTC+14
+  { label: "Africa/Lagos - UTC+1", value: "Africa/Lagos" },
+  { label: "Africa/Johannesburg - UTC+2", value: "Africa/Johannesburg" },
+  { label: "Africa/Nairobi - UTC+3", value: "Africa/Nairobi" },
+  { label: "Asia/Tehran - UTC+3:30", value: "Asia/Tehran" },
+  { label: "Asia/Dubai - UTC+4", value: "Asia/Dubai" },
+  { label: "Asia/Kabul - UTC+4:30", value: "Asia/Kabul" },
+  { label: "Asia/Karachi - UTC+5", value: "Asia/Karachi" },
+  { label: "Asia/Kolkata - UTC+5:30", value: "Asia/Kolkata" },
+  { label: "Asia/Kathmandu - UTC+5:45", value: "Asia/Kathmandu" },
+  { label: "Asia/Dhaka - UTC+6", value: "Asia/Dhaka" },
+  { label: "Asia/Yangon - UTC+6:30", value: "Asia/Yangon" },
+  { label: "Asia/Bangkok - UTC+7", value: "Asia/Bangkok" },
+  { label: "Asia/Shanghai - UTC+8", value: "Asia/Shanghai" },
+  { label: "Asia/Tokyo - UTC+9", value: "Asia/Tokyo" },
+  { label: "Australia/Darwin - UTC+9:30", value: "Australia/Darwin" },
+  { label: "Australia/Sydney - UTC+10", value: "Australia/Sydney" },
+  { label: "Pacific/Guadalcanal - UTC+11", value: "Pacific/Guadalcanal" },
+  { label: "Pacific/Auckland - UTC+12", value: "Pacific/Auckland" },
+  { label: "Pacific/Chatham - UTC+12:45", value: "Pacific/Chatham" },
+  { label: "Pacific/Tongatapu - UTC+13", value: "Pacific/Tongatapu" },
+  { label: "Pacific/Kiritimati - UTC+14", value: "Pacific/Kiritimati" },
+];
