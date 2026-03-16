@@ -62,7 +62,7 @@ export function StudentSection() {
         slotStart: selectedSlot!.start,
         slotEnd: selectedSlot!.end,
         studentTimezone: timezone,
-        levelId: '', // TODO: pass actual levelId from course selection
+        levelId: '4aa70339-128b-4e81-9518-65e5b86686fb',
       });
       if (status === 409) {
         toast(message || 'This time slot is no longer available. Please select a different time.', 'error');
